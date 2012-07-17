@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8" />
+	<title>Pig Pursuit</title>
+	<link rel="stylesheet" type="text/css" href="css/styles.css" />
+</head>
+<body>
+
+	<header>
+		<h1>Pig Pursuit</h1>
+		<p>A 2D platformer/shooter built using HTML5, JavaScript, and the canvas.</p>
+	</header>
+
+	<section id="game">
+		<input type="button" id="pause" value="Pause Game" />
+		<input type="button" id="reset" value="Reset Game" />
+	</section>
+
+	<textarea id="level"></textarea>
+
+	<footer>
+		<p id="copyright">
+			Copyright &copy; 2012 <a href="http://stevenbenner.com/">Steven Benner</a>.
+		</p>
+	</footer>
+
+	<script type="text/javascript" src="js/pig.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/pig.objects.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/pig.gfx.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/pig.audio.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/pig.core.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/levels/pig.level0.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/levels/pig.level1.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/levels/pig.level2.js" charset="utf-8"></script>
+	<script type="text/javascript">
+		window.onload = function() {
+			pig.core.init(new pig.objects.level1());
+		};
+		document.getElementById('pause').onclick = function() {
+			pig.core.pause();
+		};
+		document.getElementById('reset').onclick = function() {
+			pig.init(new pig.objects.level1());
+		};
+	</script>
+
+</body>
+</html>

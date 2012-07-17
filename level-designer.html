@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8" />
+	<title>Pig Pursuit</title>
+	<link rel="stylesheet" type="text/css" href="css/styles.css" />
+</head>
+<body>
+
+	<header>
+		<h1>Pig Pursuit</h1>
+		<p>A 2D platformer/shooter built using HTML5, JavaScript, and the canvas.</p>
+	</header>
+
+	<section id="game">
+		<input type="button" id="pause" value="Pause Game" />
+		<input type="button" id="reset" value="Reset Game" />
+	</section>
+
+	<textarea id="level" style="width: 640px; height: 600px; border: 1px solid #000; margin-top: 20px;"></textarea>
+
+	<footer>
+		<p id="copyright">
+			Copyright &copy; 2012 <a href="http://stevenbenner.com/">Steven Benner</a>.
+		</p>
+	</footer>
+
+	<script type="text/javascript" src="js/pig.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/pig.objects.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/pig.gfx.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/pig.audio.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/pig.core.js" charset="utf-8"></script>
+	<script type="text/javascript">
+		var width = prompt('Level Width', 128);
+
+		window.onload = function() {
+			var emptyLevel = new pig.objects.level(width, 16),
+				x, y, col;
+			for (x = 0; x < width; x++) {
+				col = [];
+				for (y = 0; y < 16; y++) {
+					if (y > 12) {
+						col.push(new pig.objects.gridElement('blockEarth', x, y));
+					} else {
+						col.push(null);
+					}
+				}
+				emptyLevel.content.push(col);
+			}
+			pig.core.init(emptyLevel);
+		};
+		document.getElementById('pause').onclick = function() {
+			pig.core.pause();
+		};
+		document.getElementById('reset').onclick = function() {
+			pig.init(new pig.objects.level1());
+		};
+
+		addEventListener('click', function(event) {
+			var canvasPosX = pig.session.canvas.offsetLeft,
+				canvasPosY = pig.session.canvas.offsetTop,
+				heroRealX = canvasPosX + pig.session.hero.x + 13 + pig.session.xOffset,
+				heroRealY = canvasPosY + pig.session.hero.y + 19,
+				x, y, grid;
+
+			if (event.button === 2) {
+				event.preventDefault();
+				event.stopImmediatePropagation();
+
+				grid = {
+					x: Math.ceil((event.pageX - canvasPosX + (pig.session.xOffset*-1)) / 32) - 1,
+					y: Math.ceil((event.pageY - canvasPosY) / 32) - 1
+				};
+
+				console.log(grid);
+
+				if (!pig.session.level.content[grid.x][grid.y]) {
+					pig.session.level.content[grid.x][grid.y] = new pig.objects.gridElement('block', grid.x, grid.y);
+				} else if (pig.session.level.content[grid.x][grid.y].type === 'block') {
+					pig.session.level.content[grid.x][grid.y] = new pig.objects.gridElement('blockTop', grid.x, grid.y);
+				} else if (pig.session.level.content[grid.x][grid.y].type === 'blockTop') {
+					pig.session.level.content[grid.x][grid.y] = new pig.objects.gridElement('blockTopRight', grid.x, grid.y);
+				} else if (pig.session.level.content[grid.x][grid.y].type === 'blockTopRight') {
+					pig.session.level.content[grid.x][grid.y] = new pig.objects.gridElement('blockTopLeft', grid.x, grid.y);
+				} else if (pig.session.level.content[grid.x][grid.y].type === 'blockTopLeft') {
+					pig.session.level.content[grid.x][grid.y] = new pig.objects.gridElement('blockEarth', grid.x, grid.y);
+				} else if (pig.session.level.content[grid.x][grid.y].type === 'blockEarth') {
+					pig.session.level.content[grid.x][grid.y] = new pig.objects.gridElement('blockEarthRight', grid.x, grid.y);
+				} else if (pig.session.level.content[grid.x][grid.y].type === 'blockEarthRight') {
+					pig.session.level.content[grid.x][grid.y] = new pig.objects.gridElement('blockEarthLeft', grid.x, grid.y);
+				} else if (pig.session.level.content[grid.x][grid.y].type === 'blockEarthLeft') {
+					pig.session.level.content[grid.x][grid.y] = new pig.objects.gridElement('block', grid.x, grid.y);
+				}
+
+				//console.log((event.pageX - canvasPosX + (pig.session.xOffset*-1)) + '::' + (event.pageY - canvasPosY));
+
+				var stringify = [];
+				for (x = 0; x < width; x++) {
+					var row = [];
+					for (y = 0; y < 16; y++) {
+						if (pig.session.level.content[x][y]) {
+							row.push("		new pig.objects.gridElement('" + pig.session.level.content[x][y].type + "', "+x+", "+y+")");
+						} else {
+							row.push("		null");
+						}
+					}
+					stringify.push('	[\n' + row.join(',\n') + '\n	]');
+				}
+				document.getElementById('level').value = '[\n' + stringify.join(',\n') + '\n];';
+			}
+		}, false);
+	</script>
+
+</body>
+</html>
