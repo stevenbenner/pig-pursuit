@@ -1,3 +1,15 @@
+/**
+ * Pig Pursuit
+ *
+ * @fileoverview Base code.
+ * @link https://github.com/stevenbenner/pig-pursuit
+ * @author Steven Benner
+ * @version 0
+ * @license Pig Pursuit
+ * <https://github.com/stevenbenner/pig-pursuit>
+ * Copyright (c) 2012 Steven Benner, http://stevenbenner.com/
+ */
+
 var pig = {};
 
 var GRID_SIZE = 32, // 32px grid

@@ -1,3 +1,15 @@
+/**
+ * Pig Pursuit
+ *
+ * @fileoverview Common objects.
+ * @link https://github.com/stevenbenner/pig-pursuit
+ * @author Steven Benner
+ * @version 0
+ * @license Pig Pursuit
+ * <https://github.com/stevenbenner/pig-pursuit>
+ * Copyright (c) 2012 Steven Benner, http://stevenbenner.com/
+ */
+
 pig.objects = {};
 
 pig.objects.sprite = function(url) {

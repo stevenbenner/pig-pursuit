@@ -1,3 +1,15 @@
+/**
+ * Pig Pursuit
+ *
+ * @fileoverview Introduction level.
+ * @link https://github.com/stevenbenner/pig-pursuit
+ * @author Steven Benner
+ * @version 0
+ * @license Pig Pursuit
+ * <https://github.com/stevenbenner/pig-pursuit>
+ * Copyright (c) 2012 Steven Benner, http://stevenbenner.com/
+ */
+
 pig.objects.level0 = function() {
 	this.backgroundImage = 'images/level1-background.gif';
 	this.imageObject = null;
