@@ -218,7 +218,6 @@ pig.core.updateHero = function(modifier) {
 				}
 			}
 		} else if (hasLeftCollision(pig.session.hero).type === 'door') {
-			console.log('door');
 			var nextLevel = new pig.objects.level2();
 			nextLevel.imageObject = new Image();
 			nextLevel.imageObject.addEventListener('load', (function(nextLevel) {
@@ -258,7 +257,6 @@ pig.core.updateHero = function(modifier) {
 			pig.session.hero.jumping = true;
 			pig.session.hero.jumpVelocity = pig.session.hero.speed * 3;
 			pig.audio.play('jump');
-			console.log(pig.session.hero.x, pig.session.hero.y)
 		}
 	}
 
